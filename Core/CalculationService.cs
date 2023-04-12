@@ -11,6 +11,7 @@ interface ICalculationService
 {
     void AddPizzaPrice(decimal price);
     void AddCostsOfGoods(decimal price);
+    void ReceivedTip(double tip);
     void SetTaxFor(Country country);
     decimal SumUp();
 }
@@ -19,12 +20,14 @@ public class CalculationService : ICalculationService
 {
     private Country? _country;
     private readonly IList<decimal> _pizzaPrices = new List<decimal>();
-    
+
     /// <summary>
     /// Vorallem Einkäufe am Wochenmarkt
     /// </summary>
     private IList<decimal> CostOfGoods = new List<decimal>();
-    
+
+    private IList<decimal> tips;
+
     public void AddPizzaPrice(decimal price)
     {
         _pizzaPrices.Add(price);
@@ -33,6 +36,23 @@ public class CalculationService : ICalculationService
     public void AddCostsOfGoods(decimal price)
     {
         CostOfGoods.Add(price);
+    }
+
+    public void ReceivedTip(double tip)
+    {
+        try
+        {
+            if (tips.Count > 0)
+            {
+                tips.Add((decimal) tip);
+            }
+        }
+        catch (Exception e)
+        {
+            // tips is not initialized -> first element
+            tips = new List<decimal>();
+            tips.Add((decimal) tip);
+        }
     }
 
     public void SetTaxFor(Country country)
@@ -49,7 +69,7 @@ public class CalculationService : ICalculationService
 
         var taxByCountry = GetTaxByCountry();
 
-        var combined = _pizzaPrices.Concat(CostOfGoods);
+        var combined = _pizzaPrices.Concat(CostOfGoods).Concat(tips);
         var sumWithoutTax = combined.Sum() * (1 + taxByCountry);
         return sumWithoutTax;
     }

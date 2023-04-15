@@ -2,7 +2,14 @@
 
 public class Inventory
 {
-    private readonly Dictionary<string, Ingredient> ingredients = new Dictionary<string, Ingredient>();
+    public Inventory()
+    {
+        RegisterIngredient(new Ingredient("Tomato", Unit.Pieces, 30));
+        RegisterIngredient(new Ingredient("Olive Oil", Unit.Liters, 20));
+        RegisterIngredient(new Ingredient("Flour", Unit.Grams, 50_000));
+            
+    }
+    private readonly Dictionary<string, Ingredient> ingredients = new();
 
     public IEnumerable<Ingredient> Ingredients => ingredients.Values;
 

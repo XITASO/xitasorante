@@ -1,0 +1,41 @@
+﻿@page "/inventory"
+@using Core
+@inject Core.Inventory IngredientInventory
+@inject IDialogService DialogService
+
+<PageTitle>Inventory</PageTitle>
+<h1>Inventory</h1>
+
+<MudTable Items="@IngredientInventory.Ingredients" Hover="true">
+    <HeaderContent>
+        <MudTh>Name</MudTh>
+        <MudTh>Amount</MudTh>
+        <MudTh>Actions</MudTh>
+        <MudTh>Unit</MudTh>
+    </HeaderContent>
+    <RowTemplate>
+        <MudTd>@context.Name</MudTd>
+        <MudTd>
+            @context.Amount
+        </MudTd>
+        <MudTd>
+            <MudFab Color="Color.Primary" StartIcon="@Icons.Material.Filled.Add" Size="Size.Small" @onclick="(_) => OpenIncreaseDialog(context)"/>
+        </MudTd>
+        <MudTd>@context.Unit</MudTd>
+    </RowTemplate>
+</MudTable>
+
+@code {
+
+    private async Task OpenIncreaseDialog(Ingredient ingredient)
+    {
+        var dialog = await DialogService.ShowAsync<IncreaseIngredientDialog>("Add amount");
+        var result = await dialog.Result;
+        if (!result.Canceled)
+        {
+            var amount = uint.Parse(result.Data.ToString() ?? "0");
+            ingredient.IncreaseAmount(amount);
+        }
+    }
+    
+}

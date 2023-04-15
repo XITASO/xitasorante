@@ -1,0 +1,29 @@
+﻿@using Core
+
+<MudDialog>
+    <TitleContent>
+        Please Add Amount
+    </TitleContent>
+    <DialogContent>
+        <MudNumericField @bind-Value="amount" Label="Amount to Add" Min="0u" AutoFocus="true"></MudNumericField>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Cancel">Cancel</MudButton>
+        <MudButton Color="Color.Primary" OnClick="Submit" Disabled="!CanSubmit()">Ok</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+
+    [CascadingParameter]
+    MudDialogInstance MudDialog { get; set; } = null!;
+    uint? amount;
+    bool CanSubmit() => amount != null;
+
+    void Submit()
+    {
+        MudDialog.Close(DialogResult.Ok(amount));
+    }
+
+    void Cancel() => MudDialog.Cancel(); 
+}

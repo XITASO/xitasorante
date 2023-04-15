@@ -6,26 +6,43 @@
 <PageTitle>Inventory</PageTitle>
 <h1>Inventory</h1>
 
-<MudTable Items="@IngredientInventory.Ingredients" Hover="true">
-    <HeaderContent>
-        <MudTh>Name</MudTh>
-        <MudTh>Amount</MudTh>
-        <MudTh>Actions</MudTh>
-        <MudTh>Unit</MudTh>
-    </HeaderContent>
-    <RowTemplate>
-        <MudTd>@context.Name</MudTd>
-        <MudTd>
-            @context.Amount
-        </MudTd>
-        <MudTd>
-            <MudFab Color="Color.Primary" StartIcon="@Icons.Material.Filled.Add" Size="Size.Small" @onclick="(_) => OpenIncreaseDialog(context)"/>
-        </MudTd>
-        <MudTd>@context.Unit</MudTd>
-    </RowTemplate>
-</MudTable>
+<MudButton
+    StartIcon="@Icons.Material.Filled.Add"
+    Color="Color.Primary"
+    Variant="Variant.Filled"
+    @onclick="_ => RegisterNewIngredient()">
+    Register new Ingredient
+</MudButton>
+
+<div class="ingredients-table">
+
+    <MudTable @ref="table" Items="@IngredientInventory.Ingredients" Hover="true">
+        <HeaderContent>
+            <MudTh>Name</MudTh>
+            <MudTh>Amount</MudTh>
+            <MudTh>Actions</MudTh>
+            <MudTh>Unit</MudTh>
+        </HeaderContent>
+        <RowTemplate>
+            <MudTd>@context.Name</MudTd>
+            <MudTd>
+                @context.Amount
+            </MudTd>
+            <MudTd>
+                <MudFab
+                    Color="Color.Primary"
+                    StartIcon="@Icons.Material.Filled.AddShoppingCart"
+                    Size="Size.Small"
+                    @onclick="_ => OpenIncreaseDialog(context)"/>
+            </MudTd>
+            <MudTd>@context.Unit</MudTd>
+        </RowTemplate>
+    </MudTable>
+</div>
 
 @code {
+
+    MudTable<Ingredient>? table;
 
     private async Task OpenIncreaseDialog(Ingredient ingredient)
     {
@@ -37,5 +54,14 @@
             ingredient.IncreaseAmount(amount);
         }
     }
-    
+
+    private async Task RegisterNewIngredient()
+    {
+        var dialog = await DialogService.ShowAsync<RegisterIngredientDialog>("Register new Ingredient");
+        var result = await dialog.Result;
+        if (!result.Canceled && table != null)
+        {
+            await table.ReloadServerData();
+        }
+    }
 }

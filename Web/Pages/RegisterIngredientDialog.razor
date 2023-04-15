@@ -1,0 +1,47 @@
+﻿@using Core
+@inject Core.Inventory IngredientInventory
+
+<MudDialog>
+    <TitleContent>Register a new Ingredient</TitleContent>
+    <DialogContent>
+        <MudTextField @bind-Value="name" Label="Name" AutoFocus="true"></MudTextField>
+        <MudSelect @bind-Value="unit" Label="Unit">
+            @foreach (var unitToSelect in Enum.GetNames(typeof(Unit)))
+            {
+                <MudSelectItem Value="@unitToSelect">@unitToSelect</MudSelectItem>
+            }
+        </MudSelect>
+        <MudNumericField @bind-Value="initialAmount" Label="initial Amount"></MudNumericField>
+
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Cancel">Cancel</MudButton>
+        <MudButton
+            Color="Color.Primary"
+            OnClick="Submit"
+            Disabled="!CanSubmit()">
+            Ok
+        </MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    
+    [CascadingParameter]
+    MudDialogInstance MudDialog { get; set; } = null!;
+    string? name;
+    string? unit;
+    uint initialAmount;
+
+    bool CanSubmit() => name != null && unit != null;
+
+    void Submit()
+    {
+        var selectedUnit = Enum.Parse<Unit>(unit!);
+        var ingredient = new Ingredient(name!, selectedUnit, initialAmount);
+        IngredientInventory.RegisterIngredient(ingredient);
+        MudDialog.Close();
+    }
+
+    void Cancel() => MudDialog.Cancel(); 
+}

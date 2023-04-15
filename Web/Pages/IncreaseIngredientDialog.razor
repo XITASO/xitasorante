@@ -1,15 +1,22 @@
-﻿@using Core
-
-<MudDialog>
+﻿<MudDialog>
     <TitleContent>
         Please Add Amount
     </TitleContent>
     <DialogContent>
-        <MudNumericField @bind-Value="amount" Label="Amount to Add" Min="0u" AutoFocus="true"></MudNumericField>
+        <MudNumericField
+            @bind-Value="amount" 
+            Label="Amount to Add" 
+            Min="0u"
+            AutoFocus="true"></MudNumericField>
     </DialogContent>
     <DialogActions>
         <MudButton OnClick="Cancel">Cancel</MudButton>
-        <MudButton Color="Color.Primary" OnClick="Submit" Disabled="!CanSubmit()">Ok</MudButton>
+        <MudButton
+            Color="Color.Primary"
+            OnClick="Submit"
+            Disabled="!CanSubmit()">
+            Ok
+        </MudButton>
     </DialogActions>
 </MudDialog>
 

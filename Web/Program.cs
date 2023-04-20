@@ -1,4 +1,5 @@
 using Core;
+using Infrastructure;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using Web.Data;
@@ -11,9 +12,12 @@ builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 builder.Services.AddSingleton<WeatherForecastService>();
 builder.Services.AddMudServices();
-builder.Services.AddXitasoRanteCoreDomain();
+builder.Services
+    .AddXitasoRanteInfrastructure()
+    .AddXitasoRanteCoreDomain();
 
 var app = builder.Build();
+
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
@@ -31,5 +35,11 @@ app.UseRouting();
 
 app.MapBlazorHub();
 app.MapFallbackToPage("/_Host");
+
+
+if (app.Configuration.GetValue("AddDummyData", defaultValue: false))
+{
+    app.Services.AddDummyData();
+}
 
 app.Run();

@@ -7,7 +7,7 @@ public class InventoryTests
     [Fact]
     public void Ingredients_can_be_registered()
     {
-        var inventory = new Inventory();
+        var inventory = new InMemoryInventory();
         var ingredient = new IngredientBuilder().Build();
         inventory.RegisterIngredient(ingredient);
 
@@ -17,7 +17,7 @@ public class InventoryTests
     [Fact]
     public void Throws_on_ingredient_with_same_name()
     {
-        var inventory = new Inventory();
+        var inventory = new InMemoryInventory();
         var ingredient1 = new IngredientBuilder().WithName("Tomato").Build();
         var ingredient2 = new IngredientBuilder().WithName("Tomato").Build();
         inventory.RegisterIngredient(ingredient1);

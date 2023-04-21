@@ -26,7 +26,7 @@ The SOLID ideas are:
 
 (Source: [Wikipedia](https://en.wikipedia.org/wiki/SOLID))
 
-## Assignment
+## Assignment 🎯
 
 Practice the application of the SOLID-Principles by designing and implementing a
 little Logging library.

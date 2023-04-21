@@ -5,21 +5,21 @@ public class Ingredient
     public string Name { get; }
     public Unit Unit { get; }
 
-    public uint Amount { get; private set; }
+    public double Amount { get; private set; }
 
-    public Ingredient(string name, Unit unit, uint initialAmount = 0)
+    public Ingredient(string name, Unit unit, double initialAmount = 0)
     {
         Name = name;
         Unit = unit;
         Amount = initialAmount;
     }
 
-    public void IncreaseAmount(uint toIncrease)
+    public void IncreaseAmount(double toIncrease)
     {
         Amount += toIncrease;
     }
 
-    public void DecreaseAmount(uint toDecrease)
+    public void DecreaseAmount(double toDecrease)
     {
         if (toDecrease > Amount)
         {

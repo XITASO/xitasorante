@@ -19,4 +19,8 @@ public class InMemoryInventory : IInventory
         ingredients.Add(ingredient.Name, ingredient);
     }
 
+    public Ingredient GetByName(string ingredientName)
+    {
+        return ingredients[ingredientName];
+    }
 }

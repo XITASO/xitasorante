@@ -9,7 +9,7 @@ public enum Country
 
 interface ICalculationService
 {
-    void AddPizzaPrice(decimal price);
+    void AddOrderPrice(decimal price);
     void AddCostsOfGoods(decimal price);
     void ReceivedTip(double tip);
     void SetTaxFor(Country country);
@@ -28,7 +28,7 @@ public class CalculationService : ICalculationService
 
     private IList<decimal> tips;
 
-    public void AddPizzaPrice(decimal price)
+    public void AddOrderPrice(decimal price)
     {
         _pizzaPrices.Add(price);
     }

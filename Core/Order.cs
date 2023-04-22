@@ -1,12 +1,23 @@
 ﻿using System.Collections.Immutable;
-using System.Net.Sockets;
 
 namespace Core;
 
 public class Order
 {
     private readonly Dictionary<Dish, OrderPosition> positions = new();
+    
     public IEnumerable<OrderPosition> Positions => positions.Values.ToImmutableHashSet();
+
+    public decimal TotalPrice
+    {
+        get
+        {
+            return Positions.Sum(p => p.Amount);
+        }
+    }
+    
+    public string OrderNumber { get; set; }
+    public string DeliveryAddress { get; set; }
 
     public void AddDish(Dish toAdd)
     {

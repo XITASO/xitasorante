@@ -1,18 +1,45 @@
 ﻿@page "/order"
+@using Core
+@inject ShoppingCart ShoppingCart
 
 <PageTitle>Make an order</PageTitle>
 
 <h1>Order</h1>
 
-<p role="status">Current count: @currentCount</p>
+<p role="status">Total price: @ShoppingCart.TotalPrice() EUR</p>
 
-<button class="btn btn-primary" @onclick="IncrementCount">Click me</button>
+<button class="btn btn-primary" @onclick="IncrementCount">Add Pizza</button>
+
+<table class="table">
+    <thead>
+    <tr>
+        <th>Dish</th>
+        <th>Price</th>
+        <th>Description</th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var item in ShoppingCart.GetItems())
+    {
+        <tr>
+            <td>@item.Title</td>
+            <td>@item.PriceInEuro</td>
+            <td>@item.Description</td>
+        </tr>
+    }
+    </tbody>
+</table>
 
 @code {
     private int currentCount = 0;
 
     private void IncrementCount()
     {
-        currentCount++;
+        ShoppingCart.AddDish(new Dish("Pizza", 10.42M, "Best Pizza in the world!"));
+    }
+
+    private void Checkout()
+    {
+        ShoppingCart.Order();
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Immutable;
+using Visus.Cuid;
 
 namespace Core;
 
@@ -16,7 +17,7 @@ public class Order
         }
     }
     
-    public string OrderNumber { get; set; }
+    public Cuid OrderNumber { get; } = Cuid.NewCuid();
     public string DeliveryAddress { get; set; }
 
     public void AddDish(Dish toAdd)

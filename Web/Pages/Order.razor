@@ -1,5 +1,6 @@
 ﻿@page "/order"
 @using Core
+@inject NavigationManager NavigationManager
 @inject ShoppingCart ShoppingCart
 @inject IMenu Menu
 
@@ -9,7 +10,7 @@
 
 <MudContainer>
     <MudGrid>
-        <MudItem md="9">
+        <MudItem md="8">
             <MudText Typo="Typo.h4">Menu</MudText>
             @foreach (var dish in Menu.GetMenu())
             {
@@ -28,32 +29,52 @@
                 </MudItem>
             }
         </MudItem>
-        <MudItem md="3">
-            <MudText Typo="Typo.h5">Shopping Cart</MudText>
-            @foreach (var item in ShoppingCart.GetDistinctItems())
-            {
-                <MudItem>
-                    <MudText>@item.Title - @item.PriceInEuro - @ShoppingCart.GetItemAmountByTitle(item.Title)x</MudText>
-                </MudItem>
-            }
+        <MudItem md="4">
+            <MudText Typo="Typo.h4">Shopping Cart</MudText>
             @if (ShoppingCart.GetItems().Count > 0)
             {
-                <MudText Class="mt-2">Total: @ShoppingCart.TotalPrice() EUR</MudText>
-                <MudButton OnClick="Checkout" Class="mt-4" Variant="Variant.Filled" Color="Color.Primary">Checkout</MudButton>
+                <MudCard Elevation="25" Class="p-4 mt-4">
+                    @foreach (var item in ShoppingCart.GetDistinctItems())
+                    {
+                        <MudItem Class="d-flex align-items-center">
+                            <MudText>@item.Title - @item.PriceInEuro - @ShoppingCart.GetItemAmountByTitle(item.Title)x</MudText>
+                            <MudChip Class="ml-2" OnClick="@(() => RemoveDish(item))" Color="Color.Primary" Size="Size.Small">—</MudChip>
+                        </MudItem>
+                    }
+                    <MudText Typo="Typo.subtitle1" Class="mt-2">
+                        <b>Total: @ShoppingCart.TotalPrice() EUR</b>
+                    </MudText>
+                    <MudTextField Class="my-4" size="small" @bind-Value="DeliveryAddress" Label="Delivery address" Variant="Variant.Outlined"></MudTextField>
+                    <MudButton OnClick="Checkout" Class="mt-4" Variant="Variant.Filled" Color="Color.Primary">Checkout</MudButton>
+                </MudCard>
             }
+            else
+            {
+                <MudText>Such empty 😢</MudText>
+            }
+            
         </MudItem>
     </MudGrid>
 </MudContainer>
 
 @code {
+
+    private string DeliveryAddress { get; set; }
+
     private void AddDish(Dish d)
     {
         ShoppingCart.AddDish(d);
     }
 
+    private void RemoveDish(Dish d)
+    {
+        ShoppingCart.RemoveDish(d);
+    }
+
     private void Checkout()
     {
-        ShoppingCart.Checkout();
+        var order = ShoppingCart.Checkout();
+        NavigationManager.NavigateTo($"/order/{order.OrderNumber}");
     }
 
 }

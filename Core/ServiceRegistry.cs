@@ -12,15 +12,14 @@ public static class ServiceRegistry
     public static void AddDummyData(this IServiceProvider services)
     {
         var inventory = services.GetRequiredService<IInventory>();
-
-        inventory.RegisterIngredient(new Ingredient("Tomato", Unit.Pieces, 30));
-        inventory.RegisterIngredient(new Ingredient("Olive Oil", Unit.Liters, 20));
-        inventory.RegisterIngredient(new Ingredient("Flour", Unit.Grams, 50_000));
-
         var recipeProvider = services.GetRequiredService<IRecipeProvider>();
         foreach (var recipe in CreateRecipes())
         {
             recipeProvider.Add(recipe);
+            foreach (var ingredient in recipe.Ingredients)
+            {
+                inventory.RegisterIngredient(ingredient);
+            }
         }
     }
 
@@ -34,7 +33,7 @@ public static class ServiceRegistry
                 new Ingredient("tomato", Unit.Pieces, 1),
                 new Ingredient("cheese", Unit.Grams, 75),
             }, "Bake for 1 minute in the oven"),
-            new(new Dish("Carbonara", 9.89M, "home made pasta with eggs, hard cheese and cured pork"), new[]
+            new(new Dish("Spaghetti Carbonara", 9.89M, "home made pasta with eggs, hard cheese and cured pork"), new[]
                 {
                     new Ingredient("pasta", Unit.Grams, 200),
                     new Ingredient("pancetta", Unit.Grams, 100),

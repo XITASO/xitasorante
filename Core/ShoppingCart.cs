@@ -23,8 +23,13 @@ public class ShoppingCart
     {
         items.Add(dish);
     }
+    
+    public void RemoveDish(Dish dish)
+    {
+        items.Remove(dish);
+    }
 
-    public void Checkout()
+    public Order Checkout()
     {
         var order = new Order();
         foreach (var item in items)
@@ -32,6 +37,7 @@ public class ShoppingCart
             order.AddDish(item);
         }
         orderProcessor.Process(order);
+        return order;
     }
     
 }

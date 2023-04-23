@@ -14,6 +14,7 @@ builder.Services.AddTransient<IOrderProcessor, OrderProcessor>();
 var singleInMemoryRecipeStore = new InMemoryRecipeStore();
 builder.Services.AddSingleton<IRecipeProvider>(singleInMemoryRecipeStore);
 builder.Services.AddSingleton<IMenu>(singleInMemoryRecipeStore);
+builder.Services.AddSingleton<IOrderRepository, InMemoryOrderManagement>();
 
 builder.Services.AddMudServices();
 builder.Services

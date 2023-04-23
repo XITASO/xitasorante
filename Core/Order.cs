@@ -1,5 +1,4 @@
 ﻿using System.Collections.Immutable;
-using Visus.Cuid;
 
 namespace Core;
 
@@ -16,8 +15,8 @@ public class Order
             return Positions.Sum(p => p.Amount);
         }
     }
-    
-    public Cuid OrderNumber { get; } = Cuid.NewCuid();
+
+    public ShortId OrderNumber { get; } = new();
     public string DeliveryAddress { get; set; }
 
     public void AddDish(Dish toAdd)

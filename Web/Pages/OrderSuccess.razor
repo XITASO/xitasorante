@@ -1,0 +1,29 @@
+@page "/order/{OrderId}"
+@using Core
+@using System.Text.Json
+@inject IOrderRepository OrderRepository
+
+<PageTitle>Your Order is submitted</PageTitle>
+<MudContainer Class="d-flex flex-column align-items-center">
+    <MudText Typo="Typo.h1">Your Order is submitted</MudText>
+
+    <MudIcon Icon="@Icons.Material.Filled.DeliveryDining" Style="font-size: 8rem;"/>
+    <MudText Class="mt-4" Typo="Typo.h3">We are on our way!</MudText>
+    <MudText Typo="Typo.h4">Your OrderNumber: @OrderId</MudText>
+</MudContainer>
+
+@code {
+
+    [Parameter]
+    public string OrderId { get; set; }
+
+    public Core.Order Order { get; set; }
+
+    protected override void OnInitialized()
+    {
+        var idOrderNumber = ShortId.From(OrderId);
+        Order = OrderRepository.GetOrderByNumber(idOrderNumber);
+        Console.WriteLine(JsonSerializer.Serialize(Order));
+    }
+
+}

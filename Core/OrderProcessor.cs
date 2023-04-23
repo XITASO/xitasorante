@@ -4,11 +4,13 @@ public class OrderProcessor : IOrderProcessor
 {
     private readonly IInventory inventory;
     private readonly IRecipeProvider recipes;
+    private readonly IOrderRepository orderRepository;
 
-    public OrderProcessor(IInventory inventory, IRecipeProvider recipes)
+    public OrderProcessor(IInventory inventory, IRecipeProvider recipes, IOrderRepository orderRepository)
     {
         this.inventory = inventory;
         this.recipes = recipes;
+        this.orderRepository = orderRepository;
     }
 
     public void Process(Order order)
@@ -34,5 +36,6 @@ public class OrderProcessor : IOrderProcessor
             processedIngredients.ForEach(i => inventory.GetByName(i.Name).IncreaseAmount(i.Amount));
             throw;
         }
+        orderRepository.DispatchOrder(order);
     }
 }

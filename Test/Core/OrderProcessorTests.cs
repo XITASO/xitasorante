@@ -45,10 +45,11 @@ public class OrderProcessorTests
         order.AddDish(pizzaDiavola);
         order.AddDish(pizzaDiavola);
 
+        var repository = new InMemoryOrderManagement();
         var recipes = new InMemoryRecipeStore();
         recipes.Add(pizzaDiavolaRecipe);
 
-        var orderProcessor = new OrderProcessor(inventory, recipes);
+        var orderProcessor = new OrderProcessor(inventory, recipes, repository);
         orderProcessor.Process(order);
 
         var ingredientAmounts = inventory.Ingredients.ToDictionary(i => i.Name, i => i.Amount);
@@ -103,9 +104,10 @@ public class OrderProcessorTests
         order.AddDish(pizzaDiavola);
 
         var recipes = new InMemoryRecipeStore();
+        var repository = new InMemoryOrderManagement();
         recipes.Add(pizzaDiavolaRecipe);
 
-        var orderProcessor = new OrderProcessor(inventory, recipes);
+        var orderProcessor = new OrderProcessor(inventory, recipes, repository);
         var doProcess = () => orderProcessor.Process(order);
 
         doProcess.Should().Throw<IngredientExhausted>();

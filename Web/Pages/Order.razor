@@ -1,45 +1,59 @@
 ﻿@page "/order"
 @using Core
+@using Infrastructure.Persistence
 @inject ShoppingCart ShoppingCart
 
 <PageTitle>Make an order</PageTitle>
 
-<h1>Order</h1>
+<MudText Typo="Typo.h1">Order</MudText>
 
-<p role="status">Total price: @ShoppingCart.TotalPrice() EUR</p>
-
-<button class="btn btn-primary" @onclick="IncrementCount">Add Pizza</button>
-
-<table class="table">
-    <thead>
-    <tr>
-        <th>Dish</th>
-        <th>Price</th>
-        <th>Description</th>
-    </tr>
-    </thead>
-    <tbody>
-    @foreach (var item in ShoppingCart.GetItems())
-    {
-        <tr>
-            <td>@item.Title</td>
-            <td>@item.PriceInEuro</td>
-            <td>@item.Description</td>
-        </tr>
-    }
-    </tbody>
-</table>
+<MudContainer>
+    <MudGrid>
+        <MudItem md="9">
+            <MudText Typo="Typo.h4">Menu</MudText>
+            @foreach (var dish in SimpleMenu.Menu)
+            {
+                <MudItem mt>
+                    <MudCard Elevation="25" Class="mt-4">
+                        <MudCardHeader>
+                            <CardHeaderContent>
+                                <MudText Typo="Typo.h5">@dish.Title</MudText>
+                            </CardHeaderContent>
+                        </MudCardHeader>
+                        <CardHeaderContent class="px-4 py-2 d-flex justify-content-between">
+                            <MudText Typo="Typo.body1">@dish.Description</MudText>
+                            <MudFab OnClick="@(() => AddDish(dish))" Color="Color.Primary" StartIcon="@Icons.Material.Filled.Add"/>
+                        </CardHeaderContent>
+                    </MudCard>
+                </MudItem>
+            }
+        </MudItem>
+        <MudItem md="3">
+            <MudText Typo="Typo.h5">Shopping Cart</MudText>
+            @foreach (var item in ShoppingCart.GetDistinctItems())
+            {
+                <MudItem>
+                    <MudText>@item.Title - @item.PriceInEuro - @ShoppingCart.GetItemAmountByTitle(item.Title)x</MudText>
+                </MudItem>
+            }
+            @if (ShoppingCart.GetItems().Count > 0)
+            {
+                <MudText Class="mt-2">Total: @ShoppingCart.TotalPrice() EUR</MudText>
+                <MudButton Class="mt-4" Variant="Variant.Filled" Color="Color.Primary">Checkout</MudButton>
+            }
+        </MudItem>
+    </MudGrid>
+</MudContainer>
 
 @code {
-    private int currentCount = 0;
-
-    private void IncrementCount()
+    private void AddDish(Dish d)
     {
-        ShoppingCart.AddDish(new Dish("Pizza", 10.42M, "Best Pizza in the world!"));
+        ShoppingCart.AddDish(d);
     }
 
     private void Checkout()
     {
         ShoppingCart.Order();
     }
+
 }

@@ -13,6 +13,10 @@ public class ShoppingCart
 
     public IList<Dish> GetItems() => items;
 
+    public IEnumerable<Dish> GetDistinctItems() => items.GroupBy(i => i.Title).Select(i => i.First());
+
+    public int GetItemAmountByTitle(string title) => items.Count(i => i.Title == title);
+
     private IList<Dish> items = new List<Dish>();
     
     public void AddDish(Dish dish)

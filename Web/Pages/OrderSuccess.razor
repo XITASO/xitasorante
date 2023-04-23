@@ -1,6 +1,5 @@
 @page "/order/{OrderId}"
 @using Core
-@using System.Text.Json
 @inject IOrderRepository OrderRepository
 
 <PageTitle>Your Order is submitted</PageTitle>
@@ -23,7 +22,6 @@
     {
         var idOrderNumber = ShortId.From(OrderId);
         Order = OrderRepository.GetOrderByNumber(idOrderNumber);
-        Console.WriteLine(JsonSerializer.Serialize(Order));
     }
 
 }

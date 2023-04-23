@@ -1,7 +1,7 @@
 ﻿@page "/order"
 @using Core
-@using Infrastructure.Persistence
 @inject ShoppingCart ShoppingCart
+@inject IMenu Menu
 
 <PageTitle>Make an order</PageTitle>
 
@@ -11,7 +11,7 @@
     <MudGrid>
         <MudItem md="9">
             <MudText Typo="Typo.h4">Menu</MudText>
-            @foreach (var dish in SimpleMenu.Menu)
+            @foreach (var dish in Menu.GetMenu())
             {
                 <MudItem mt>
                     <MudCard Elevation="25" Class="mt-4">
@@ -39,7 +39,7 @@
             @if (ShoppingCart.GetItems().Count > 0)
             {
                 <MudText Class="mt-2">Total: @ShoppingCart.TotalPrice() EUR</MudText>
-                <MudButton Class="mt-4" Variant="Variant.Filled" Color="Color.Primary">Checkout</MudButton>
+                <MudButton OnClick="Checkout" Class="mt-4" Variant="Variant.Filled" Color="Color.Primary">Checkout</MudButton>
             }
         </MudItem>
     </MudGrid>
@@ -53,7 +53,7 @@
 
     private void Checkout()
     {
-        ShoppingCart.Order();
+        ShoppingCart.Checkout();
     }
 
 }

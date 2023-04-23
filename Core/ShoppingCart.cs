@@ -24,7 +24,7 @@ public class ShoppingCart
         items.Add(dish);
     }
 
-    public void Order()
+    public void Checkout()
     {
         var order = new Order();
         foreach (var item in items)

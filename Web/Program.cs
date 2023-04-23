@@ -1,9 +1,6 @@
 using Core;
 using Infrastructure;
 using Infrastructure.Persistence;
-using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Web;
-using Web.Data;
 using MudBlazor.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -11,10 +8,13 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
-builder.Services.AddSingleton<WeatherForecastService>();
 builder.Services.AddTransient<ShoppingCart>();
 builder.Services.AddTransient<IOrderProcessor, OrderProcessor>();
-builder.Services.AddTransient<IRecipeProvider, InMemoryRecipeStore>();
+
+var singleInMemoryRecipeStore = new InMemoryRecipeStore();
+builder.Services.AddSingleton<IRecipeProvider>(singleInMemoryRecipeStore);
+builder.Services.AddSingleton<IMenu>(singleInMemoryRecipeStore);
+
 builder.Services.AddMudServices();
 builder.Services
     .AddXitasoRanteInfrastructure()

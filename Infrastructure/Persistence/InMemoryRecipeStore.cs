@@ -2,7 +2,7 @@
 
 namespace Infrastructure.Persistence;
 
-public class InMemoryRecipeStore : IRecipeProvider
+public class InMemoryRecipeStore : IRecipeProvider, IMenu
 {
     private readonly Dictionary<Dish, Recipe> recipes = new();
 
@@ -14,5 +14,10 @@ public class InMemoryRecipeStore : IRecipeProvider
     public Recipe Get(Dish toFind)
     {
         return recipes[toFind];
+    }
+
+    public IList<Dish> GetMenu()
+    {
+        return recipes.Keys.ToList();
     }
 }

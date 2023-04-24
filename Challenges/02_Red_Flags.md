@@ -12,6 +12,8 @@ In software development and engineering, red flags are indicators of potential p
 * Conjoined Methods: two methods are tightly coupled and unable to understand by its own
 * ...
 
+Also See [Red_Flags_List](./Red_Flags_List.md) for more detailed examples.
+
 ## Assignment 🎯: Identify Red Flags 🚩
 
 1. Develop a comprehensive list of potential red flags for software development, using the list provided above as a starting point.

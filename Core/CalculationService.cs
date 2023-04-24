@@ -7,35 +7,21 @@ public enum Country
     France,
 }
 
-interface ICalculationService
-{
-    void AddOrderPrice(decimal price);
-    void AddCostsOfGoods(decimal price);
-    void ReceivedTip(double tip);
-    void SetTaxFor(Country country);
-    decimal SumUp();
-}
-
 public class CalculationService : ICalculationService
 {
-    private Country? _country;
-    private readonly IList<decimal> _pizzaPrices = new List<decimal>();
-
-    /// <summary>
-    /// Vorallem Einkäufe am Wochenmarkt
-    /// </summary>
-    private IList<decimal> CostOfGoods = new List<decimal>();
+    private Country? country;
+    private readonly IList<InvoicePosition> invoicePositions = new List<InvoicePosition>();
 
     private IList<decimal> tips;
 
-    public void AddOrderPrice(decimal price)
+    public void AddInvoicePosition(Dish dish)
     {
-        _pizzaPrices.Add(price);
-    }
-
-    public void AddCostsOfGoods(decimal price)
-    {
-        CostOfGoods.Add(price);
+        invoicePositions.Add(new InvoicePosition
+        {
+            Name = dish.Title,
+            TaxRate = GetTaxByCountry(),
+            Total = dish.PriceInEuro,
+        });
     }
 
     public void ReceivedTip(double tip)
@@ -55,33 +41,35 @@ public class CalculationService : ICalculationService
         }
     }
 
-    public void SetTaxFor(Country country)
+    public void SetTaxFor(Country c)
     {
-        _country = country;
+        country = c;
     }
 
-    public decimal SumUp()
+    public Invoice SumUp()
     {
-        if (_country is null)
+        if (country is null)
         {
             throw new Exception("Country not set");
         }
 
         var taxByCountry = GetTaxByCountry();
-
-        var combined = _pizzaPrices.Concat(CostOfGoods).Concat(tips);
-        var sumWithoutTax = combined.Sum() * (1 + taxByCountry);
-        return sumWithoutTax;
+        var positionsTotal = invoicePositions.Sum(ip => ip.NetTotal);
+        return new Invoice
+        {
+            InvoicePositions = invoicePositions,
+            Total = positionsTotal * (1 + taxByCountry)
+        };
     }
 
     private decimal GetTaxByCountry()
     {
-        if (_country is null)
+        if (country is null)
         {
             throw new Exception("Country not set");
         }
 
-        switch (_country)
+        switch (country)
         {
             case Country.Germany:
                 return new decimal(0.19);

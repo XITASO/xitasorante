@@ -18,6 +18,8 @@ public class Order
 
     public ShortId OrderNumber { get; } = new();
     public string DeliveryAddress { get; set; }
+    
+    public bool Payed { get; set; }
 
     public void AddDish(Dish toAdd)
     {

@@ -9,6 +9,41 @@
     <MudIcon Icon="@Icons.Material.Filled.DeliveryDining" Style="font-size: 8rem;"/>
     <MudText Class="mt-4" Typo="Typo.h3">We are on our way!</MudText>
     <MudText Typo="Typo.h4">Your OrderNumber: @OrderId</MudText>
+    @if (Invoice is null)
+    {
+        <MudNumericField
+            @bind-Value="tip"
+            Label="Tip"
+            Min="0u"
+            AutoFocus="true"/>
+        <MudButton OnClick="PayOrder" Variant="Variant.Outlined" Color="Color.Primary">
+            Pay via PayPal
+        </MudButton>
+    }
+    else
+    {
+        <MudCard Elevation="25" Class="p-4 mt-10">
+            <MudText Class="mt-5" Typo="Typo.h2">Your Invoice</MudText>
+            <MudText Class="mt-5" Typo="Typo.h5">Invoice Number: @Invoice.InvoiceNumber</MudText>
+            <MudList>
+                @foreach (var position in Invoice.InvoicePositions)
+                {
+                    <MudListItem  Icon="@Icons.Material.Filled.Fastfood">
+                        <MudText><b>@position.Name</b></MudText>
+                        <MudText>Net: @Math.Round(position.NetTotal, 2)€ - Tax: @Math.Round(position.Tax, 2)€ (Rate: @(position.TaxRate * 100)%) - Total: @position.Total€</MudText>
+                    </MudListItem>
+                    <MudDivider/>
+                }
+                <MudListItem>
+                    <MudElement Class="d-flex justify-content-end">
+                        <MudText>
+                            <b>Total: @Math.Round(Invoice.Total, 2)€</b>
+                        </MudText>
+                    </MudElement>
+                </MudListItem>
+            </MudList>
+        </MudCard>
+    }
 </MudContainer>
 
 @code {
@@ -18,10 +53,19 @@
 
     public Core.Order Order { get; set; }
 
+    public Invoice? Invoice { get; set; }
+
+    private double tip { get; set; }
+
     protected override void OnInitialized()
     {
         var idOrderNumber = ShortId.From(OrderId);
         Order = OrderRepository.GetOrderByNumber(idOrderNumber);
+    }
+
+    public void PayOrder()
+    {
+        Invoice = OrderRepository.PayOrder(ShortId.From(OrderId), tip);
     }
 
 }

@@ -45,7 +45,7 @@ public class OrderProcessorTests
         order.AddDish(pizzaDiavola);
         order.AddDish(pizzaDiavola);
 
-        var repository = new InMemoryOrderManagement();
+        var repository = new InMemoryOrderManagement(new CalculationService());
         var recipes = new InMemoryRecipeStore();
         recipes.Add(pizzaDiavolaRecipe);
 
@@ -104,7 +104,7 @@ public class OrderProcessorTests
         order.AddDish(pizzaDiavola);
 
         var recipes = new InMemoryRecipeStore();
-        var repository = new InMemoryOrderManagement();
+        var repository = new InMemoryOrderManagement(new CalculationService());
         recipes.Add(pizzaDiavolaRecipe);
 
         var orderProcessor = new OrderProcessor(inventory, recipes, repository);

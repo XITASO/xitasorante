@@ -10,6 +10,7 @@ builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 builder.Services.AddTransient<ShoppingCart>();
 builder.Services.AddTransient<IOrderProcessor, OrderProcessor>();
+builder.Services.AddTransient<ICalculationService, CalculationService>();
 
 var singleInMemoryRecipeStore = new InMemoryRecipeStore();
 builder.Services.AddSingleton<IRecipeProvider>(singleInMemoryRecipeStore);

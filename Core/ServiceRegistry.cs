@@ -27,7 +27,7 @@ public static class ServiceRegistry
     {
         return new List<Recipe>
         {
-            new(new Dish("Pizza Margeritha", 10.42M, "with cheese"), new[]
+            new(new Dish("Pizza Margherita", 10.42M, "with cheese"), new[]
             {
                 new Ingredient("flour", Unit.Grams, 100),
                 new Ingredient("tomato", Unit.Pieces, 1),

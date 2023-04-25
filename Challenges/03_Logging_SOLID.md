@@ -50,6 +50,6 @@ little Logging library.
   was created.
 - The logging library should provide extensibility for output destinations,
   allowing developers to provide implementations that write to different
-  desitnations.
+  destinations.
 
 ##   

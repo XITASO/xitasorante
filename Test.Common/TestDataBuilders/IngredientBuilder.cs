@@ -1,8 +1,9 @@
 ﻿using Core;
+using Test.Unit.TestDataBuilders;
 
-namespace Test.Unit.TestDataBuilders;
+namespace Test.Common.TestDataBuilders;
 
-internal class IngredientBuilder: ITestDataBuilder<Ingredient>
+public class IngredientBuilder: ITestDataBuilder<Ingredient>
 {
     private uint amount = 50;
     private string name = "Olives";

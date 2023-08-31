@@ -1,6 +1,5 @@
-﻿using Core;
-using Infrastructure.Persistence;
-using Test.Unit.TestDataBuilders;
+﻿using Infrastructure.Persistence;
+using Test.Common.TestDataBuilders;
 
 namespace Test.Unit.Core;
 

@@ -6,7 +6,10 @@ public static class ServiceRegistry
 {
     public static IServiceCollection AddXitasoRanteCoreDomain(this IServiceCollection services)
     {
-        return services;
+        return services
+            .AddTransient<ShoppingCart>()
+            .AddTransient<IOrderProcessor, OrderProcessor>()
+            .AddTransient<ICalculationService, CalculationService>();
     }
 
     public static void AddDummyData(this IServiceProvider services)

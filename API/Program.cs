@@ -1,8 +1,9 @@
+using API;
 using Core;
+using DomainServices;
 using Infrastructure;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Identity.Web;
-using NewTon.API;
 
 const string corsOrigin = "Access-Control-Allow-Origin";
 var builder = WebApplication.CreateBuilder(args);
@@ -10,7 +11,12 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services
     .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-    .AddMicrosoftIdentityWebApi(builder.Configuration.GetSection("AzureAd"));
+    .AddMicrosoftIdentityWebApi(jwtOptions =>
+    {
+        jwtOptions.Audience = "887a0966-f4aa-439c-ab83-4244b1009ee5";
+    }, 
+    msIdentityOptions => builder.Configuration.GetSection("AzureAd").Bind(msIdentityOptions)
+   );
 builder.Services.AddAuthorization();
 
 builder.Services.AddControllers();
@@ -18,6 +24,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options => options.AddAuthorizationToSwaggerUI(builder.Configuration));
 builder.Services
     .AddXitasoRanteInfrastructure()
+    .AddXitasoRanteDomainServices()
     .AddXitasoRanteCoreDomain();
 
 

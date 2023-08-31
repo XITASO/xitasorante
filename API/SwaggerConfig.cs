@@ -1,12 +1,18 @@
 ﻿using Microsoft.OpenApi.Models;
-
 using Swashbuckle.AspNetCore.SwaggerGen;
 using Swashbuckle.AspNetCore.SwaggerUI;
 
-namespace NewTon.API;
+namespace API;
 
 public static class SwaggerConfig
 {
+    public static Dictionary<string, string > Scopes = new Dictionary<string, string>() 
+    {
+         { "api://887a0966-f4aa-439c-ab83-4244b1009ee5/Inventory.Modify", "Modify Inventory"},
+         { "api://887a0966-f4aa-439c-ab83-4244b1009ee5/Recipes.Modify", "Modify Recipes"},
+         { "api://887a0966-f4aa-439c-ab83-4244b1009ee5/Recipes.Read", "Read Recipes"},
+    };
+
     /// <summary>
     /// Add login button to swagger UI that authenticates against Azure Active Directory
     /// </summary>
@@ -19,6 +25,7 @@ public static class SwaggerConfig
         var clientId = configuration["AzureAd:ClientId"] ??
                        throw new ArgumentException("Configuration AzureAd:ClientId missing");
         ;
+        
 
         opts.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme
         {
@@ -32,12 +39,7 @@ public static class SwaggerConfig
                 {
                     AuthorizationUrl = new Uri($"{instance}/{tenantId}/oauth2/v2.0/authorize"),
                     TokenUrl = new Uri($"{instance}/{tenantId}/oauth2/v2.0/token"),
-                    Scopes = new Dictionary<string, string>()
-                    {
-                        {
-                            "api://xitasorante-test/Inventory.Modify", "Modify Inventory"
-                        },
-                    },
+                    Scopes = Scopes,
                 },
             },
         });
@@ -64,5 +66,6 @@ public static class SwaggerConfig
         options.OAuthClientId(clientId);
         options.OAuthUsePkce();
         options.OAuthScopeSeparator(" ");
+        options.OAuthScopes(Scopes.Keys.ToArray());
     }
 }

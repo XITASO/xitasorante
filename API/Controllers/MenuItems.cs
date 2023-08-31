@@ -9,17 +9,11 @@ namespace API.Controllers;
 [Route("[controller]")]
 public class MenuItems : ControllerBase
 {
-    private IMenu Menu { get; }
 
-    public MenuItems(IMenu menu)
-    {
-        Menu = menu;
-    }
-    
     [HttpGet]
-    public IEnumerable<DishDto> Index()
+    public IEnumerable<DishDto> Index([FromServices] IMenu menu)
     {
-        return Menu.GetMenu().Select(d => new DishDto(d.Title, d.PriceInEuro, d.Description));
+        return menu.GetMenu().Select(d => new DishDto(d.Title, d.PriceInEuro, d.Description));
     }
 }
 

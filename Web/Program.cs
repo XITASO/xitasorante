@@ -11,7 +11,7 @@ builder.Services.AddServerSideBlazor();
 builder.Services.AddMudServices();
 
 builder.Services
-    .AddXitasoRanteInfrastructure()
+    .AddXitasoRanteInfrastructure(builder.Configuration)
     .AddXitasoRanteCoreDomain();
 
 var app = builder.Build();
@@ -35,9 +35,10 @@ app.MapBlazorHub();
 app.MapFallbackToPage("/_Host");
 
 
-if (app.Configuration.GetValue("AddDummyData", defaultValue: false))
+if (app.Configuration.GetValue("AddDummyData", defaultValue: false) &&
+    !bool.Parse(app.Configuration.GetSection("FeatureToggles")["Database"] ?? "false"));
 {
-    app.Services.AddDummyData();
+    app.Services.AddDummyData(app.Configuration);
 }
 
 app.Run();

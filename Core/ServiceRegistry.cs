@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Core;
 
@@ -12,7 +13,7 @@ public static class ServiceRegistry
             .AddTransient<ICalculationService, CalculationService>();
     }
 
-    public static void AddDummyData(this IServiceProvider services)
+    public static void AddDummyData(this IServiceProvider services, IConfiguration config)
     {
         var inventory = services.GetRequiredService<IInventory>();
         var recipeProvider = services.GetRequiredService<IRecipeProvider>();

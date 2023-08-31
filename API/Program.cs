@@ -23,7 +23,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options => options.AddAuthorizationToSwaggerUI(builder.Configuration));
 builder.Services
-    .AddXitasoRanteInfrastructure()
+    .AddXitasoRanteInfrastructure(builder.Configuration)
     .AddXitasoRanteDomainServices()
     .AddXitasoRanteCoreDomain();
 
@@ -58,8 +58,9 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-if (app.Configuration.GetValue("AddDummyData", defaultValue: false))
+if (app.Configuration.GetValue("AddDummyData", defaultValue: false) &&
+    !bool.Parse(app.Configuration.GetSection("FeatureToggles")["Database"] ?? "false"))
 {
-    app.Services.AddDummyData();
+    app.Services.AddDummyData(app.Configuration);
 }
 app.Run();

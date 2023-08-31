@@ -1,4 +1,5 @@
 ﻿using Core;
+using Infrastructure.Persistence;
 using Test.TestDataBuilders;
 
 namespace Test.Core;

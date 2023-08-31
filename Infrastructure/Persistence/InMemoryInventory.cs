@@ -1,4 +1,6 @@
-﻿namespace Core;
+﻿using Core;
+
+namespace Infrastructure.Persistence;
 
 public class InMemoryInventory : IInventory
 {

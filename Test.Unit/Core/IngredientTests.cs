@@ -1,18 +1,18 @@
 ﻿using System.Collections.Immutable;
 using Core;
-using Test.TestDataBuilders;
+using Test.Unit.TestDataBuilders;
 
-namespace Test.Core;
+namespace Test.Unit.Core;
 
 public class IngredientTests
 {
     [Fact]
     public void Has_correct_initialValues()
     {
-        var ingredient = new Ingredient("Tomato", Unit.Pieces, 50);
+        var ingredient = new Ingredient("Tomato", global::Core.Unit.Pieces, 50);
 
         ingredient.Name.Should().Be("Tomato");
-        ingredient.Unit.Should().Be(Unit.Pieces);
+        ingredient.Unit.Should().Be(global::Core.Unit.Pieces);
         ingredient.Amount.Should().Be(50);
     }
 

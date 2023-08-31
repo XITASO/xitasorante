@@ -1,7 +1,7 @@
 ﻿using System.Reflection;
 using Infrastructure.Import;
 
-namespace Test.Infrastructure.Import;
+namespace Test.Unit.Infrastructure.Import;
 
 public class SegmentationServiceTest
 {

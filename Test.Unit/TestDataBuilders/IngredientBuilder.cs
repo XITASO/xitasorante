@@ -1,12 +1,12 @@
 ﻿using Core;
 
-namespace Test.TestDataBuilders;
+namespace Test.Unit.TestDataBuilders;
 
 internal class IngredientBuilder: ITestDataBuilder<Ingredient>
 {
     private uint amount = 50;
     private string name = "Olives";
-    private Unit unit = Unit.Packs;
+    private global::Core.Unit unit = global::Core.Unit.Packs;
 
     public IngredientBuilder WithName(string value)
     {
@@ -20,7 +20,7 @@ internal class IngredientBuilder: ITestDataBuilder<Ingredient>
         return this;
     }
 
-    public IngredientBuilder WithUnit(Unit value)
+    public IngredientBuilder WithUnit(global::Core.Unit value)
     {
         unit = value;
         return this;

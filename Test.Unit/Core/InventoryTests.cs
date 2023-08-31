@@ -1,8 +1,8 @@
 ﻿using Core;
 using Infrastructure.Persistence;
-using Test.TestDataBuilders;
+using Test.Unit.TestDataBuilders;
 
-namespace Test.Core;
+namespace Test.Unit.Core;
 
 public class InventoryTests
 {

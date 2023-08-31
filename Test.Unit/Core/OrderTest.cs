@@ -1,6 +1,6 @@
 ﻿using Core;
 
-namespace Test.Core;
+namespace Test.Unit.Core;
 
 public class OrderTest
 {

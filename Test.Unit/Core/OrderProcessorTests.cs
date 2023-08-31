@@ -1,7 +1,7 @@
 ﻿using Core;
 using Infrastructure.Persistence;
 
-namespace Test.Core;
+namespace Test.Unit.Core;
 
 public class OrderProcessorTests
 {
@@ -9,26 +9,26 @@ public class OrderProcessorTests
     public void It_removes_ingredients_from_inventory_for_two_pizzas()
     {
         var inventory = new InMemoryInventory();
-        inventory.RegisterIngredient(new Ingredient("Flour", Unit.Grams, 10_000));
-        inventory.RegisterIngredient(new Ingredient("Salt", Unit.Grams, 5_000));
-        inventory.RegisterIngredient(new Ingredient("Tomato", Unit.Pieces, 50));
-        inventory.RegisterIngredient(new Ingredient("Cheese", Unit.Grams, 10_000));
-        inventory.RegisterIngredient(new Ingredient("Salami", Unit.Grams, 10_000));
-        inventory.RegisterIngredient(new Ingredient("Chilli", Unit.Pieces, 100));
-        inventory.RegisterIngredient(new Ingredient("Water", Unit.Liters, 10_000));
-        inventory.RegisterIngredient(new Ingredient("Yeast", Unit.Pieces, 50));
+        inventory.RegisterIngredient(new Ingredient("Flour", global::Core.Unit.Grams, 10_000));
+        inventory.RegisterIngredient(new Ingredient("Salt", global::Core.Unit.Grams, 5_000));
+        inventory.RegisterIngredient(new Ingredient("Tomato", global::Core.Unit.Pieces, 50));
+        inventory.RegisterIngredient(new Ingredient("Cheese", global::Core.Unit.Grams, 10_000));
+        inventory.RegisterIngredient(new Ingredient("Salami", global::Core.Unit.Grams, 10_000));
+        inventory.RegisterIngredient(new Ingredient("Chilli", global::Core.Unit.Pieces, 100));
+        inventory.RegisterIngredient(new Ingredient("Water", global::Core.Unit.Liters, 10_000));
+        inventory.RegisterIngredient(new Ingredient("Yeast", global::Core.Unit.Pieces, 50));
 
         var pizzaDiavola = new Dish("Pizza Diavola", 9.5m, "Hot and spicy");
         var pizzaDiavolaRecipe = new Recipe(pizzaDiavola, new[]
             {
-                new Ingredient("Flour", Unit.Grams, 500),
-                new Ingredient("Salt", Unit.Grams, 5),
-                new Ingredient("Tomato", Unit.Pieces, 2),
-                new Ingredient("Cheese", Unit.Grams, 150),
-                new Ingredient("Salami", Unit.Grams, 150),
-                new Ingredient("Chilli", Unit.Pieces, 5),
-                new Ingredient("Water", Unit.Liters, 0.25),
-                new Ingredient("Yeast", Unit.Pieces, 0.5),
+                new Ingredient("Flour", global::Core.Unit.Grams, 500),
+                new Ingredient("Salt", global::Core.Unit.Grams, 5),
+                new Ingredient("Tomato", global::Core.Unit.Pieces, 2),
+                new Ingredient("Cheese", global::Core.Unit.Grams, 150),
+                new Ingredient("Salami", global::Core.Unit.Grams, 150),
+                new Ingredient("Chilli", global::Core.Unit.Pieces, 5),
+                new Ingredient("Water", global::Core.Unit.Liters, 0.25),
+                new Ingredient("Yeast", global::Core.Unit.Pieces, 0.5),
             },
             """
 1.    Sieve the flour/s and salt on to a clean work surface and make a well in the middle.
@@ -68,26 +68,26 @@ public class OrderProcessorTests
     public void It_does_not_remove_ingredients_if_it_cannot_process_the_order()
     {
         var inventory = new InMemoryInventory();
-        inventory.RegisterIngredient(new Ingredient("Flour", Unit.Grams, 10_000));
-        inventory.RegisterIngredient(new Ingredient("Salt", Unit.Grams, 5_000));
-        inventory.RegisterIngredient(new Ingredient("Tomato", Unit.Pieces, 50));
-        inventory.RegisterIngredient(new Ingredient("Cheese", Unit.Grams, 10_000));
-        inventory.RegisterIngredient(new Ingredient("Salami", Unit.Grams, 10_000));
-        inventory.RegisterIngredient(new Ingredient("Chilli", Unit.Pieces, 0));
-        inventory.RegisterIngredient(new Ingredient("Water", Unit.Liters, 10_000));
-        inventory.RegisterIngredient(new Ingredient("Yeast", Unit.Pieces, 50));
+        inventory.RegisterIngredient(new Ingredient("Flour", global::Core.Unit.Grams, 10_000));
+        inventory.RegisterIngredient(new Ingredient("Salt", global::Core.Unit.Grams, 5_000));
+        inventory.RegisterIngredient(new Ingredient("Tomato", global::Core.Unit.Pieces, 50));
+        inventory.RegisterIngredient(new Ingredient("Cheese", global::Core.Unit.Grams, 10_000));
+        inventory.RegisterIngredient(new Ingredient("Salami", global::Core.Unit.Grams, 10_000));
+        inventory.RegisterIngredient(new Ingredient("Chilli", global::Core.Unit.Pieces, 0));
+        inventory.RegisterIngredient(new Ingredient("Water", global::Core.Unit.Liters, 10_000));
+        inventory.RegisterIngredient(new Ingredient("Yeast", global::Core.Unit.Pieces, 50));
 
         var pizzaDiavola = new Dish("Pizza Diavola", 9.5m, "Hot and spicy");
         var pizzaDiavolaRecipe = new Recipe(pizzaDiavola, new[]
             {
-                new Ingredient("Flour", Unit.Grams, 500),
-                new Ingredient("Salt", Unit.Grams, 5),
-                new Ingredient("Tomato", Unit.Pieces, 2),
-                new Ingredient("Cheese", Unit.Grams, 150),
-                new Ingredient("Salami", Unit.Grams, 150),
-                new Ingredient("Chilli", Unit.Pieces, 5),
-                new Ingredient("Water", Unit.Liters, 0.25),
-                new Ingredient("Yeast", Unit.Pieces, 0.5),
+                new Ingredient("Flour", global::Core.Unit.Grams, 500),
+                new Ingredient("Salt", global::Core.Unit.Grams, 5),
+                new Ingredient("Tomato", global::Core.Unit.Pieces, 2),
+                new Ingredient("Cheese", global::Core.Unit.Grams, 150),
+                new Ingredient("Salami", global::Core.Unit.Grams, 150),
+                new Ingredient("Chilli", global::Core.Unit.Pieces, 5),
+                new Ingredient("Water", global::Core.Unit.Liters, 0.25),
+                new Ingredient("Yeast", global::Core.Unit.Pieces, 0.5),
             },
             """
 1.    Sieve the flour/s and salt on to a clean work surface and make a well in the middle.

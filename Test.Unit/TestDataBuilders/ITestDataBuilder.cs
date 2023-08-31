@@ -1,4 +1,4 @@
-﻿namespace Test.TestDataBuilders;
+﻿namespace Test.Unit.TestDataBuilders;
 
 internal interface ITestDataBuilder<out T>
 {

@@ -26,4 +26,9 @@
       <None Remove="appsettings.test.json" />
     </ItemGroup>
 
+    <ItemGroup>
+      <None Remove="Setup\synchronous-token-signing-keys.json" />
+      <EmbeddedResource Include="Setup\synchronous-token-signing-keys.json" />
+    </ItemGroup>
+
 </Project>

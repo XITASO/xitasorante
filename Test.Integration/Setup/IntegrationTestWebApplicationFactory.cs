@@ -17,6 +17,12 @@ public class IntegrationTestWebApplicationFactory : WebApplicationFactory<Ingred
     {
         builder.UseSetting("AddDummyData", false.ToString());
         builder.UseSetting("ConnectionStrings:DefaultConnection", "Server=127.0.0.1,1433;Database=xitasorante_test;User Id=SA;Password=XITASOTestPasswd!;TrustServerCertificate=True;");
+        
+        // Stub out the retrieval of JWT token validation keys
+        builder.ConfigureServices(services =>
+        {
+            services.InjectSynchronousTokenSigningKey();
+        });
 
         base.ConfigureWebHost(builder);
     }

@@ -1,0 +1,12 @@
+{
+    "keys": [
+        {
+            "kid": "symmetric-key-for-integration-test-jwt-validation",
+            "use": "sig",
+            "kty": "oct",
+            "alg": "HS256",
+            "k": "eDdjcXV0SXZwVFN5TURRem9BRkxUdVhyZ3Zob21pZ01jVGMzNnliMHZtWDFkVXp6cG5CRHA2"
+        }
+    ],
+    "skipUnresolvedJsonWebKeys": false
+}

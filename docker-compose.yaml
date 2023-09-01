@@ -1,0 +1,23 @@
+version: "3.8"
+services:
+  database:
+    container_name: "sql-database"
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=XITASOTestPasswd!
+    volumes:
+      - sqlserver:/var/opt/mssql
+    ports:
+      - 1433:1433
+    restart: unless-stopped
+# currently unused hence commented    
+#  email:
+#    container_name: "fake-smtp"
+#    image: rnwood/smtp4dev
+#    ports:
+#      - 2525:25
+#      - 3000:80
+#    restart: unless-stopped
+volumes:
+  sqlserver:

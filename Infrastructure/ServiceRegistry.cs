@@ -11,7 +11,14 @@ public static class ServiceRegistry
     public static IServiceCollection AddXitasoRanteInfrastructure(this IServiceCollection services,
         IConfiguration config)
     {
+
+    var infraStructureConfig = new InfraStructureConfig();
+        config.Bind(infraStructureConfig);
+        services.AddSingleton(infraStructureConfig);
+        
         var databaseEnabled = bool.Parse(config.GetSection("FeatureToggles")["Database"] ?? "false");
+        if (databaseEnabled)
+        
         if (databaseEnabled)
         {
             services.AddDbContextFactory<XitasoranteDBContext>(opt =>

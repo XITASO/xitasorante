@@ -19,6 +19,15 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{3C083A3C-9
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test.Common", "Test.Common\Test.Common.csproj", "{53958A98-0DB3-4EFE-A2BC-F47DD83EC6F5}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test.Integration", "Test.Integration\Test.Integration.csproj", "{A8556B01-C6CB-4821-9E73-E069D34246CC}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SolutionItems", "SolutionItems", "{646AC020-A91C-4D7D-A7EF-787F8BCE89A0}"
+	ProjectSection(SolutionItems) = preProject
+		.gitignore = .gitignore
+		Readme.md = Readme.md
+		docker-compose.yaml = docker-compose.yaml
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -56,9 +65,14 @@ Global
 		{53958A98-0DB3-4EFE-A2BC-F47DD83EC6F5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{53958A98-0DB3-4EFE-A2BC-F47DD83EC6F5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{53958A98-0DB3-4EFE-A2BC-F47DD83EC6F5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A8556B01-C6CB-4821-9E73-E069D34246CC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A8556B01-C6CB-4821-9E73-E069D34246CC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A8556B01-C6CB-4821-9E73-E069D34246CC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A8556B01-C6CB-4821-9E73-E069D34246CC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{8C20DFED-DCDE-433A-8A59-282155DDCDD5} = {3C083A3C-936A-49A9-8F20-82667ABD40DD}
 		{53958A98-0DB3-4EFE-A2BC-F47DD83EC6F5} = {3C083A3C-936A-49A9-8F20-82667ABD40DD}
+		{A8556B01-C6CB-4821-9E73-E069D34246CC} = {3C083A3C-936A-49A9-8F20-82667ABD40DD}
 	EndGlobalSection
 EndGlobal

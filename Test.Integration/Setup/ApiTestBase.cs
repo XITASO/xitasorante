@@ -1,4 +1,5 @@
 ﻿using Infrastructure.Persistence;
+using Microsoft.EntityFrameworkCore.Storage;
 
 namespace Test.Integration.Setup;
 
@@ -14,12 +15,14 @@ public abstract class ApiTestBase : IDisposable
     private readonly ApiTestFixture fixture;
     private HttpClient? httpClient;
     private XitasoranteDBContext? db;
+    private readonly IDbContextTransaction transaction;
     protected HttpClient Client => httpClient ??= fixture.CreateClient();
     protected XitasoranteDBContext DBContext => db ??= fixture.CreateDbContext();
 
     protected ApiTestBase(ApiTestFixture fixture)
     {
         this.fixture = fixture;
+        transaction = DBContext.Database.BeginTransaction();
     }
 
     protected virtual void Dispose(bool disposing)
@@ -28,6 +31,7 @@ public abstract class ApiTestBase : IDisposable
         {
             httpClient?.Dispose();
             db?.Dispose();
+            transaction.Rollback();
         }
     }
 

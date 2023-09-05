@@ -17,7 +17,6 @@ public static class ServiceRegistry
         services.AddSingleton(infraStructureConfig);
         
         var databaseEnabled = bool.Parse(config.GetSection("FeatureToggles")["Database"] ?? "false");
-        if (databaseEnabled)
         
         if (databaseEnabled)
         {

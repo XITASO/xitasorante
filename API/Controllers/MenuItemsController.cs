@@ -7,7 +7,7 @@ namespace API.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public class MenuItems : ControllerBase
+public class MenuItemsController : ControllerBase
 {
 
     [HttpGet]
